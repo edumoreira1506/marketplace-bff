@@ -8,7 +8,7 @@
 		"dev": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/index.ts",
 		"start": "node build/index.js",
 		"lint": "eslint .",
-		"test": "jest"
+		"test": "echo 'No tests found'"
 	},
 	"repository": {},
 	"author": "Eduardo Moreira",
