@@ -7,6 +7,7 @@ import AdvertisingQuestionAggregator from '@Aggregators/AdvertisingQuestionAggre
 class AdvertisingQuestionController {
   constructor() {
     this.store = this.store.bind(this)
+    this.storeAnswer = this.storeAnswer.bind(this)
   }
 
   @BaseController.errorHandler()
@@ -25,6 +26,26 @@ class AdvertisingQuestionController {
     )
 
     return BaseController.successResponse(res, { question: savedQuestion })
+  }
+
+  @BaseController.errorHandler()
+  async storeAnswer(req: AuthenticatedRequest, res: Response) {
+    const merchant = req.merchant
+    const user = req.user
+    const answer = req.body.answer
+    const advertisingId = req.params.advertisingId
+    const questionId = req.params.questionId
+
+    if (!merchant || !user) throw new NotFoundError()
+
+    const savedQuestionAnswer = await AdvertisingQuestionAggregator.postQuestionAnswer(
+      merchant.id,
+      advertisingId,
+      questionId,
+      { ...answer, externalId: user.id }
+    )
+
+    return BaseController.successResponse(res, { answer: savedQuestionAnswer })
   }
 }
 

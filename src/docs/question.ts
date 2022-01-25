@@ -1,6 +1,6 @@
 import { createDoc } from '@cig-platform/docs'
 
-import { storeAdvertisingQuestionSchema } from '@Schemas/AdvertisingQuestionSchema'
+import { storeAdvertisingQuestionSchema } from '@Schemas/AdvertisingQuestionSchemas'
 
 export default {
   ...createDoc('/breeders/{breederId}/poultries/{poultryId}/advertisings/{advertisingId}/questions', ['Advertising question'], [

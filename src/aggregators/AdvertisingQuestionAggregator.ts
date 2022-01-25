@@ -1,5 +1,5 @@
 import { AdvertisingServiceClient as IAdvertisingServiceClient  } from '@cig-platform/core'
-import { IAdvertisingQuestion } from '@cig-platform/types'
+import { IAdvertisingQuestion, IAdvertisingQuestionAnswer } from '@cig-platform/types'
 
 import AdvertisingServiceClient from '@Clients/AdvertisingServiceClient'
 
@@ -21,6 +21,17 @@ export class AdvertisingQuestionAggregator {
   ) {
     return this._advertisingServiceClient.postAdvertisingQuestion(
       merchantId, advertisingId, question
+    )
+  }
+
+  async postQuestionAnswer(
+    merchantId: string,
+    advertisingId: string,
+    questionId: string,
+    answer: Partial<IAdvertisingQuestionAnswer>
+  ) {
+    return this._advertisingServiceClient.postAdvertisingQuestionAnswer(
+      merchantId, advertisingId, questionId, answer
     )
   }
 }
