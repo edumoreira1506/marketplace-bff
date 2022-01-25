@@ -18,6 +18,8 @@ module.exports = {
       {
         alias: {
           "@Configs": "./src/configs",
+          "@Clients": "./src/clients",
+          "@Aggregators": "./src/aggregators",
           "@Routes": "./src/routes",
           "@Entities": "./src/entities",
           "@Constants": "./src/constants",
