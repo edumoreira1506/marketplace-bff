@@ -23,7 +23,7 @@ router.post(
   withBodyValidation(storeAdvertisingQuestionAnswerSchema),
   withTokenAuthoritzation,
   withBreederPermission,
-  AdvertisingQuestionController.store
+  AdvertisingQuestionController.storeAnswer
 )
 
 export default router
