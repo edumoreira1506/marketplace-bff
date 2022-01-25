@@ -1,5 +1,5 @@
-import userDocs from '@Docs/user'
+import questionDocs from './question'
 
 export default {
-  ...userDocs
+  ...questionDocs
 }
