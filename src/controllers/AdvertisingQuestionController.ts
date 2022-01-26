@@ -12,15 +12,15 @@ class AdvertisingQuestionController {
 
   @BaseController.errorHandler()
   async store(req: AuthenticatedRequest, res: Response) {
-    const merchant = req.merchant
     const user = req.user
     const question = req.body.question
     const advertisingId = req.params.advertisingId
+    const breederId = req.params.breederId
 
-    if (!merchant || !user) throw new NotFoundError()
+    if (!user) throw new NotFoundError()
 
     const savedQuestion = await AdvertisingQuestionAggregator.postQuestion(
-      merchant.id,
+      breederId,
       advertisingId,
       { ...question, externalId: user.id }
     )

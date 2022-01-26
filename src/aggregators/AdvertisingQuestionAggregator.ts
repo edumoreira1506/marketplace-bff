@@ -15,13 +15,17 @@ export class AdvertisingQuestionAggregator {
   }
 
   async postQuestion(
-    merchantId: string,
+    breederId: string,
     advertisingId: string,
     question: Partial<IAdvertisingQuestion>
   ) {
-    return this._advertisingServiceClient.postAdvertisingQuestion(
-      merchantId, advertisingId, question
-    )
+    const merchants = await this._advertisingServiceClient.getMerchants(breederId)
+
+    if (merchants.length) {
+      return this._advertisingServiceClient.postAdvertisingQuestion(
+        merchants[0].id, advertisingId, question
+      )
+    }
   }
 
   async postQuestionAnswer(
