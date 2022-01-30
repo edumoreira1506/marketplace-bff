@@ -28,7 +28,7 @@ router.post(
 )
 
 router.post(
-  '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/deal',
+  '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/deals',
   withTokenAuthoritzation,
   DealController.store
 )
