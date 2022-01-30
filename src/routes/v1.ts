@@ -2,6 +2,7 @@ import { withBodyValidation } from '@cig-platform/core'
 import express from 'express'
 
 import AdvertisingQuestionController from '@Controllers/AdvertisingQuestionController'
+import DealController from '@Controllers/DealController'
 
 import { storeAdvertisingQuestionSchema } from '@Schemas/AdvertisingQuestionSchemas'
 import { storeAdvertisingQuestionAnswerSchema } from '@Schemas/AdvertisingQuestionAnswerSchemas'
@@ -24,6 +25,12 @@ router.post(
   withTokenAuthoritzation,
   withBreederPermission,
   AdvertisingQuestionController.storeAnswer
+)
+
+router.post(
+  '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/deals',
+  withTokenAuthoritzation,
+  DealController.store
 )
 
 export default router
