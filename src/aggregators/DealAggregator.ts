@@ -2,6 +2,7 @@ import {
   DealServiceClient as IDealServiceClient,
   AdvertisingServiceClient as IAdvertisingServiceClient
 } from '@cig-platform/core'
+import { DealEventValueEnum } from '@cig-platform/enums'
 
 import DealServiceClient from '@Clients/DealServiceClient'
 import AdvertisingServiceClient from '@Clients/AdvertisingServiceClient'
@@ -29,11 +30,15 @@ export class DealAggregator {
 
     const sellerId = merchants?.[0]?.id ?? ''
 
-    return this._dealServiceClient.registerDeal({
+    const deal = await this._dealServiceClient.registerDeal({
       advertisingId,
       buyerId: merchantId,
       sellerId,
     })
+
+    await this._dealServiceClient.registerDealEvent(deal.id, { value: DealEventValueEnum.placed, metadata: {} })
+
+    return { deal }
   }
 }
 
