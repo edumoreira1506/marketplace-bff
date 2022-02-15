@@ -25,6 +25,7 @@ export class DealAggregator {
     breederId: string,
     advertisingId: string,
     merchantId: string,
+    { description, value }: { description: string; value: number }
   ) {
     const merchants = await this._advertisingServiceClient.getMerchants(breederId)
 
@@ -36,7 +37,10 @@ export class DealAggregator {
       sellerId,
     })
 
-    await this._dealServiceClient.registerDealEvent(deal.id, { value: DealEventValueEnum.placed, metadata: {} })
+    await this._dealServiceClient.registerDealEvent(deal.id, {
+      value: DealEventValueEnum.placed,
+      metadata: { description, value }
+    })
 
     return { deal }
   }

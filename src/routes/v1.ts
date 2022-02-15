@@ -6,6 +6,7 @@ import DealController from '@Controllers/DealController'
 
 import { storeAdvertisingQuestionSchema } from '@Schemas/AdvertisingQuestionSchemas'
 import { storeAdvertisingQuestionAnswerSchema } from '@Schemas/AdvertisingQuestionAnswerSchemas'
+import { storeDealSchema } from '@Schemas/DealSchemas'
 
 import withTokenAuthoritzation from '@Middlewares/withTokenAuthoritzation'
 import withBreederPermission from '@Middlewares/withBreederPermission'
@@ -30,6 +31,7 @@ router.post(
 router.post(
   '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/deals',
   withTokenAuthoritzation,
+  withBodyValidation(storeDealSchema),
   DealController.store
 )
 
