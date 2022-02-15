@@ -15,10 +15,17 @@ class DealController {
     const merchant = req.merchant
     const advertisingId = req.params.advertisingId
     const breederId = req.params.breederId
+    const value = Number(req?.body?.value)
+    const description = req?.body?.description ?? ''
 
     if (!user || !merchant) throw new NotFoundError()
 
-    const deal = await DealAggregator.registerDeal(breederId, advertisingId, merchant.id)
+    const deal = await DealAggregator.registerDeal(
+      breederId,
+      advertisingId,
+      merchant.id,
+      { value, description }
+    )
 
     return BaseController.successResponse(res, { deal })
   }
