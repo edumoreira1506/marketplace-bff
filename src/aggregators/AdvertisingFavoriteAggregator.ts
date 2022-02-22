@@ -28,6 +28,22 @@ export class AdvertisingFavoriteAggregator {
       )
     }
   }
+
+  async removeFavorite(
+    breederId: string,
+    advertisingId: string,
+    favoriteId: string
+  ) {
+    const merchants = await this._advertisingServiceClient.getMerchants(breederId)
+
+    if (merchants.length) {
+      return this._advertisingServiceClient.removeAdvertisingFavorite(
+        merchants[0].id,
+        advertisingId,
+        favoriteId
+      )
+    }
+  }
 }
 
 export default new AdvertisingFavoriteAggregator(AdvertisingServiceClient)

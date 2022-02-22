@@ -20,6 +20,12 @@ router.post(
   AdvertisingFavoriteController.store
 )
 
+router.delete(
+  '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/favorites/:favoriteId',
+  withTokenAuthoritzation,
+  AdvertisingFavoriteController.remove
+)
+
 router.post(
   '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/questions',
   withBodyValidation(storeAdvertisingQuestionSchema),
