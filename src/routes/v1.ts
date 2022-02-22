@@ -4,6 +4,7 @@ import express from 'express'
 import AdvertisingQuestionController from '@Controllers/AdvertisingQuestionController'
 import DealController from '@Controllers/DealController'
 import AdvertisingFavoriteController from '@Controllers/AdvertisingFavoriteController'
+import AdvertisingController from '@Controllers/AdvertisingController'
 
 import { storeAdvertisingQuestionSchema } from '@Schemas/AdvertisingQuestionSchemas'
 import { storeAdvertisingQuestionAnswerSchema } from '@Schemas/AdvertisingQuestionAnswerSchemas'
@@ -13,6 +14,11 @@ import withTokenAuthoritzation from '@Middlewares/withTokenAuthoritzation'
 import withBreederPermission from '@Middlewares/withBreederPermission'
 
 const router = express.Router()
+
+router.get(
+  '/home',
+  AdvertisingController.home
+)
 
 router.post(
   '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/favorites',
