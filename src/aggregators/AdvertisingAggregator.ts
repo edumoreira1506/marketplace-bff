@@ -41,14 +41,14 @@ export class AdvertisingFavoriteAggregator {
     })
 
     const getPoultriesEntireData = async (poultries: Poultry[] = []) => Promise.all(poultries.map(async (poultry: Poultry) => {
-      const merchants = await this._advertisingServiceClient.getMerchants(poultry.id)
+      const merchants = await this._advertisingServiceClient.getMerchants(poultry.breederId)
       const breeder = await this._poultryServiceClient.getBreeder(poultry.breederId)
 
       if (!merchants.length) return { poultry, breeder }
 
-      const advertising = await this._advertisingServiceClient.getAdvertisings(merchants[0].id, poultry.id)
+      const advertisings = await this._advertisingServiceClient.getAdvertisings(merchants[0].id, poultry.id, false)
 
-      return { poultry, advertising, breeder }
+      return { poultry, advertising: advertisings?.[0], breeder }
     }))
 
     const femaleChickensWithAdvertising = await getPoultriesEntireData(femaleChickens)
