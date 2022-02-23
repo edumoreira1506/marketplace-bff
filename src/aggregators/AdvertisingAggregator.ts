@@ -97,8 +97,9 @@ export class AdvertisingFavoriteAggregator {
       type,
     })
     const poultriesWithAllData = await this.getPoultriesEntireData(poultries)
+
     const filteredPoultries = poultriesWithAllData.filter(p => {
-      if (!prices?.min || !prices?.max || !p.advertising?.price) return true
+      if (prices?.min === undefined || prices?.max === undefined || !p.advertising?.price) return true
 
       return p.advertising.price >= prices.min && p.advertising.price <= prices.max
     })
