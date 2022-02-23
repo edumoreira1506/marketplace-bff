@@ -105,11 +105,11 @@ export class AdvertisingFavoriteAggregator {
     })
 
     if (sort === 'MAX_TO_MIN') return filteredPoultries.sort((a, b) =>
-      (a.advertising?.price ?? 0) - (b?.advertising?.price ?? 0)
+      (b.advertising?.price ?? 0) - (a?.advertising?.price ?? 0)
     )
 
     if (sort === 'MIN_TO_MAX') return filteredPoultries.sort((a, b) =>
-      (b.advertising?.price ?? 0) - (a?.advertising?.price ?? 0)
+      (a.advertising?.price ?? 0) - (b?.advertising?.price ?? 0)
     )
 
     return filteredPoultries
