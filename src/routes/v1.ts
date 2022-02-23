@@ -20,6 +20,11 @@ router.get(
   AdvertisingController.home
 )
 
+router.get(
+  '/search',
+  AdvertisingController.search
+)
+
 router.post(
   '/breeders/:breederId/poultries/:poultryId/advertisings/:advertisingId/favorites',
   withTokenAuthoritzation,

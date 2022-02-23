@@ -22,6 +22,17 @@ export class AdvertisingFavoriteAggregator {
     this._poultryServiceClient = poultryServiceClient
   }
 
+  getPoultriesEntireData = async (poultries: Poultry[] = []) => Promise.all(poultries.map(async (poultry: Poultry) => {
+    const merchants = await this._advertisingServiceClient.getMerchants(poultry.breederId)
+    const breeder = await this._poultryServiceClient.getBreeder(poultry.breederId)
+
+    if (!merchants.length) return { poultry, breeder }
+
+    const advertisings = await this._advertisingServiceClient.getAdvertisings(merchants[0].id, poultry.id, false)
+
+    return { poultry, advertising: advertisings?.[0], breeder }
+  }))
+
   async home() {
     const femaleChickens = await this._poultryServiceClient.findPoultries({
       genderCategory: PoultryGenderCategoryEnum.MaleChicken,
@@ -40,21 +51,10 @@ export class AdvertisingFavoriteAggregator {
       forSale: 'true'
     })
 
-    const getPoultriesEntireData = async (poultries: Poultry[] = []) => Promise.all(poultries.map(async (poultry: Poultry) => {
-      const merchants = await this._advertisingServiceClient.getMerchants(poultry.breederId)
-      const breeder = await this._poultryServiceClient.getBreeder(poultry.breederId)
-
-      if (!merchants.length) return { poultry, breeder }
-
-      const advertisings = await this._advertisingServiceClient.getAdvertisings(merchants[0].id, poultry.id, false)
-
-      return { poultry, advertising: advertisings?.[0], breeder }
-    }))
-
-    const femaleChickensWithAdvertising = await getPoultriesEntireData(femaleChickens)
-    const maleChickensWithAdvertising = await getPoultriesEntireData(maleChickens)
-    const reproductivesWithAdvertising = await getPoultriesEntireData(reproductives)
-    const matrixesWithAdvertising = await getPoultriesEntireData(matrixes)
+    const femaleChickensWithAdvertising = await this.getPoultriesEntireData(femaleChickens)
+    const maleChickensWithAdvertising = await this.getPoultriesEntireData(maleChickens)
+    const reproductivesWithAdvertising = await this.getPoultriesEntireData(reproductives)
+    const matrixesWithAdvertising = await this.getPoultriesEntireData(matrixes)
 
     return {
       femaleChickens: femaleChickensWithAdvertising,
@@ -62,6 +62,56 @@ export class AdvertisingFavoriteAggregator {
       reproductives: reproductivesWithAdvertising,
       matrixes: matrixesWithAdvertising
     }
+  }
+
+  async search({
+    gender,
+    type,
+    tail,
+    dewlap,
+    crest,
+    keyword,
+    genderCategory,
+    prices,
+    sort
+  }: {
+    gender?: string;
+    type?: string;
+    tail?: string;
+    dewlap?: string;
+    crest?: string;
+    keyword?: string;
+    genderCategory?: string;
+    prices?: { min?: number; max?: number };
+    sort?: string;
+  }) {
+    const poultries = await this._poultryServiceClient.findPoultries({
+      crest,
+      description: keyword,
+      dewlap,
+      forSale: 'true',
+      gender,
+      genderCategory,
+      name: keyword,
+      tail,
+      type,
+    })
+    const poultriesWithAllData = await this.getPoultriesEntireData(poultries)
+    const filteredPoultries = poultriesWithAllData.filter(p => {
+      if (!prices?.min || !prices?.max || !p.advertising?.price) return true
+
+      return p.advertising.price >= prices.min && p.advertising.price <= prices.max
+    })
+
+    if (sort === 'MAX_TO_MIN') return filteredPoultries.sort((a, b) =>
+      (a.advertising?.price ?? 0) - (b?.advertising?.price ?? 0)
+    )
+
+    if (sort === 'MIN_TO_MAX') return filteredPoultries.sort((a, b) =>
+      (b.advertising?.price ?? 0) - (a?.advertising?.price ?? 0)
+    )
+
+    return filteredPoultries
   }
 }
 
