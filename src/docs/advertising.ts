@@ -50,6 +50,10 @@ export default {
           type: 'string',
           name: 'sort'
         },
+        {
+          type: 'string',
+          name: 'favoriteIds'
+        },
       ]
     },
   ]),

@@ -73,7 +73,8 @@ export class AdvertisingFavoriteAggregator {
     keyword,
     genderCategory,
     prices,
-    sort
+    sort,
+    favoriteIds
   }: {
     gender?: string;
     type?: string;
@@ -84,6 +85,7 @@ export class AdvertisingFavoriteAggregator {
     genderCategory?: string;
     prices?: { min?: number; max?: number };
     sort?: string;
+    favoriteIds?: string;
   }) {
     const poultries = await this._poultryServiceClient.findPoultries({
       crest,
@@ -102,6 +104,12 @@ export class AdvertisingFavoriteAggregator {
       if (prices?.min === undefined || prices?.max === undefined || !p.advertising?.price) return true
 
       return p.advertising.price >= prices.min && p.advertising.price <= prices.max
+    }).filter(p => {
+      const favoritedIdsArray = favoriteIds?.split(',').filter(Boolean) ?? []
+
+      if (!favoritedIdsArray.length || !p.advertising?.id) return p
+
+      return favoritedIdsArray.includes(p.advertising.id)
     })
 
     if (sort === 'MAX_TO_MIN') return filteredPoultries.sort((a, b) =>
