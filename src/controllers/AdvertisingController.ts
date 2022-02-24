@@ -27,6 +27,7 @@ class AdvertisingFavoriteController {
     const genderCategory = req?.query?.genderCategory?.toString()
     const prices = req?.query?.prices && JSON.parse(req.query.prices.toString())
     const sort = req?.query?.sort?.toString()
+    const favoriteIds = req?.query?.favorites?.toString()
     const advertisings = await AdvertisingAggregator.search({
       crest,
       dewlap,
@@ -36,7 +37,8 @@ class AdvertisingFavoriteController {
       prices,
       sort,
       tail,
-      type
+      type,
+      favoriteIds
     })
 
     return BaseController.successResponse(res, { advertisings })
