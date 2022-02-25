@@ -18,13 +18,13 @@ class AdvertisingFavoriteController {
 
   @BaseController.errorHandler()
   async search(req: Request, res: Response) {
-    const gender = req.query?.gender?.toString()
-    const type = req.query?.type?.toString()
-    const tail = req.query?.tail?.toString()
-    const dewlap = req.query?.dewlap?.toString()
-    const crest = req.query?.crest?.toString()
+    const gender = req.query?.gender?.toString().split(',') ?? []
+    const type = req.query?.type?.toString().split(',') ?? []
+    const tail = req.query?.tail?.toString().split(',') ?? []
+    const dewlap = req.query?.dewlap?.toString().split(',') ?? []
+    const crest = req.query?.crest?.toString().split(',') ?? []
     const keyword = req?.query?.keyword?.toString()
-    const genderCategory = req?.query?.genderCategory?.toString()
+    const genderCategory = req?.query?.genderCategory?.toString().split(',') ?? []
     const prices = req?.query?.prices && JSON.parse(req.query.prices.toString())
     const sort = req?.query?.sort?.toString()
     const favoriteIds = req?.query?.favoriteIds?.toString()

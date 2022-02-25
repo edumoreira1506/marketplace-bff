@@ -35,19 +35,19 @@ export class AdvertisingFavoriteAggregator {
 
   async home() {
     const femaleChickens = await this._poultryServiceClient.findPoultries({
-      genderCategory: PoultryGenderCategoryEnum.MaleChicken,
+      genderCategory: [PoultryGenderCategoryEnum.MaleChicken],
       forSale: 'true'
     })
     const maleChickens = await this._poultryServiceClient.findPoultries({
-      genderCategory: PoultryGenderCategoryEnum.FemaleChicken,
+      genderCategory: [PoultryGenderCategoryEnum.FemaleChicken],
       forSale: 'true'
     })
     const matrixes = await this._poultryServiceClient.findPoultries({
-      genderCategory: PoultryGenderCategoryEnum.Matrix,
+      genderCategory: [PoultryGenderCategoryEnum.Matrix],
       forSale: 'true'
     })
     const reproductives = await this._poultryServiceClient.findPoultries({
-      genderCategory: PoultryGenderCategoryEnum.Reproductive,
+      genderCategory: [PoultryGenderCategoryEnum.Reproductive],
       forSale: 'true'
     })
 
@@ -76,13 +76,13 @@ export class AdvertisingFavoriteAggregator {
     sort,
     favoriteIds
   }: {
-    gender?: string;
-    type?: string;
-    tail?: string;
-    dewlap?: string;
-    crest?: string;
+    gender?: string[];
+    type?: string[];
+    tail?: string[];
+    dewlap?: string[];
+    crest?: string[];
     keyword?: string;
-    genderCategory?: string;
+    genderCategory?: string[];
     prices?: { min?: number; max?: number };
     sort?: string;
     favoriteIds?: string;
