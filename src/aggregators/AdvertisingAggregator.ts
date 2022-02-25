@@ -2,7 +2,7 @@ import {
   AdvertisingServiceClient as IAdvertisingServiceClient,
   PoultryServiceClient as IPoultryServiceClient
 } from '@cig-platform/core'
-import { PoultryGenderCategoryEnum } from '@cig-platform/enums'
+import { PoultryGenderCategoryEnum, RegisterTypeEnum } from '@cig-platform/enums'
 import { IPoultry } from '@cig-platform/types'
 
 import AdvertisingServiceClient from '@Clients/AdvertisingServiceClient'
@@ -29,8 +29,9 @@ export class AdvertisingFavoriteAggregator {
     if (!merchants.length) return { poultry, breeder }
 
     const advertisings = await this._advertisingServiceClient.getAdvertisings(merchants[0].id, poultry.id, false)
+    const measurementAndWeight = await this._poultryServiceClient.getRegisters(breeder.id, poultry.id, RegisterTypeEnum.MeasurementAndWeighing)
 
-    return { poultry, advertising: advertisings?.[0], breeder }
+    return { poultry, advertising: advertisings?.[0], breeder, measurementAndWeight: measurementAndWeight?.[0] }
   }))
 
   async home() {
