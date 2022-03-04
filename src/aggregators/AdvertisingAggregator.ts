@@ -35,22 +35,22 @@ export class AdvertisingFavoriteAggregator {
   }))
 
   async home() {
-    const femaleChickens = await this._poultryServiceClient.findPoultries({
+    const { poultries: femaleChickens } = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.MaleChicken],
       forSale: 'true',
       page: 0,
     })
-    const maleChickens = await this._poultryServiceClient.findPoultries({
+    const { poultries: maleChickens } = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.FemaleChicken],
       forSale: 'true',
       page: 0,
     })
-    const matrixes = await this._poultryServiceClient.findPoultries({
+    const { poultries: matrixes } = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.Matrix],
       forSale: 'true',
       page: 0,
     })
-    const reproductives = await this._poultryServiceClient.findPoultries({
+    const { poultries: reproductives } = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.Reproductive],
       forSale: 'true',
       page: 0,
@@ -79,7 +79,8 @@ export class AdvertisingFavoriteAggregator {
     genderCategory,
     prices,
     sort,
-    favoriteIds
+    favoriteIds,
+    page = 0
   }: {
     gender?: string[];
     type?: string[];
@@ -88,11 +89,12 @@ export class AdvertisingFavoriteAggregator {
     crest?: string[];
     keyword?: string;
     genderCategory?: string[];
-    prices?: { min?: number; max?: number };
+    prices?: { min: number; max: number };
     sort?: string;
     favoriteIds?: string;
+    page?: number;
   }) {
-    const poultries = await this._poultryServiceClient.findPoultries({
+    const { poultries, pages } = await this._poultryServiceClient.findPoultries({
       crest,
       description: keyword,
       dewlap,
@@ -102,14 +104,13 @@ export class AdvertisingFavoriteAggregator {
       name: keyword,
       tail,
       type,
+      prices,
+      sort,
+      page,
     })
     const poultriesWithAllData = await this.getPoultriesEntireData(poultries)
 
     const filteredPoultries = poultriesWithAllData.filter(p => {
-      if (prices?.min === undefined || prices?.max === undefined || !p.advertising?.price) return true
-
-      return p.advertising.price >= prices.min && p.advertising.price <= prices.max
-    }).filter(p => {
       const favoritedIdsArray = favoriteIds?.split(',').filter(Boolean) ?? []
 
       if (!favoritedIdsArray.length || !p.advertising?.id) return p
@@ -117,15 +118,7 @@ export class AdvertisingFavoriteAggregator {
       return favoritedIdsArray.includes(p.advertising.id)
     })
 
-    if (sort === 'MAX_TO_MIN') return filteredPoultries.sort((a, b) =>
-      (b.advertising?.price ?? 0) - (a?.advertising?.price ?? 0)
-    )
-
-    if (sort === 'MIN_TO_MAX') return filteredPoultries.sort((a, b) =>
-      (a.advertising?.price ?? 0) - (b?.advertising?.price ?? 0)
-    )
-
-    return filteredPoultries
+    return { advertisings: filteredPoultries, pages }
   }
 }
 
