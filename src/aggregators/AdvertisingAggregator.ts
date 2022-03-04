@@ -37,19 +37,23 @@ export class AdvertisingFavoriteAggregator {
   async home() {
     const femaleChickens = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.MaleChicken],
-      forSale: 'true'
+      forSale: 'true',
+      page: 0,
     })
     const maleChickens = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.FemaleChicken],
-      forSale: 'true'
+      forSale: 'true',
+      page: 0,
     })
     const matrixes = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.Matrix],
-      forSale: 'true'
+      forSale: 'true',
+      page: 0,
     })
     const reproductives = await this._poultryServiceClient.findPoultries({
       genderCategory: [PoultryGenderCategoryEnum.Reproductive],
-      forSale: 'true'
+      forSale: 'true',
+      page: 0,
     })
 
     const femaleChickensWithAdvertising = await this.getPoultriesEntireData(femaleChickens)
