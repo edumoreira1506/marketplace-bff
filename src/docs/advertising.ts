@@ -52,6 +52,10 @@ export default {
         },
         {
           type: 'string',
+          name: 'page'
+        },
+        {
+          type: 'string',
           name: 'favoriteIds'
         },
       ]
