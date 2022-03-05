@@ -20,7 +20,7 @@ class DealController {
 
     if (!user || !merchant) throw new NotFoundError()
 
-    const deal = await DealAggregator.registerDeal(
+    const { deal } = await DealAggregator.registerDeal(
       breederId,
       advertisingId,
       merchant.id,
