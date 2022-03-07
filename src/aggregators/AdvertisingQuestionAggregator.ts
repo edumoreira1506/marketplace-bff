@@ -4,7 +4,7 @@ import { IAdvertisingQuestion, IAdvertisingQuestionAnswer } from '@cig-platform/
 import AdvertisingServiceClient from '@Clients/AdvertisingServiceClient'
 
 export class AdvertisingQuestionAggregator {
-  private _advertisingServiceClient: IAdvertisingServiceClient;
+  private _advertisingServiceClient: IAdvertisingServiceClient
   
   constructor(
     advertisingServiceClient: IAdvertisingServiceClient,

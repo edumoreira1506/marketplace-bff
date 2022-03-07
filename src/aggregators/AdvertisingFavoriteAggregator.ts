@@ -3,7 +3,7 @@ import { AdvertisingServiceClient as IAdvertisingServiceClient  } from '@cig-pla
 import AdvertisingServiceClient from '@Clients/AdvertisingServiceClient'
 
 export class AdvertisingFavoriteAggregator {
-  private _advertisingServiceClient: IAdvertisingServiceClient;
+  private _advertisingServiceClient: IAdvertisingServiceClient
   
   constructor(
     advertisingServiceClient: IAdvertisingServiceClient,

@@ -11,8 +11,8 @@ import PoultryServiceClient from '@Clients/PoultryServiceClient'
 type Poultry = IPoultry & { mainImage: string; breederId: string }
 
 export class AdvertisingFavoriteAggregator {
-  private _advertisingServiceClient: IAdvertisingServiceClient;
-  private _poultryServiceClient: IPoultryServiceClient;
+  private _advertisingServiceClient: IAdvertisingServiceClient
+  private _poultryServiceClient: IPoultryServiceClient
 
   constructor(
     advertisingServiceClient: IAdvertisingServiceClient,
