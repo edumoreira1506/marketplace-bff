@@ -8,8 +8,8 @@ import DealServiceClient from '@Clients/DealServiceClient'
 import AdvertisingServiceClient from '@Clients/AdvertisingServiceClient'
 
 export class DealAggregator {
-  private _dealServiceClient: IDealServiceClient;
-  private _advertisingServiceClient: IAdvertisingServiceClient;
+  private _dealServiceClient: IDealServiceClient
+  private _advertisingServiceClient: IAdvertisingServiceClient
   
   constructor(
     dealServiceClient: IDealServiceClient,
