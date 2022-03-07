@@ -10,7 +10,7 @@ import PoultryServiceClient from '@Clients/PoultryServiceClient'
 
 type Poultry = IPoultry & { mainImage: string; breederId: string }
 
-export class AdvertisingFavoriteAggregator {
+export class AdvertisingAggregator {
   private _advertisingServiceClient: IAdvertisingServiceClient
   private _poultryServiceClient: IPoultryServiceClient
 
@@ -122,7 +122,7 @@ export class AdvertisingFavoriteAggregator {
   }
 }
 
-export default new AdvertisingFavoriteAggregator(
+export default new AdvertisingAggregator(
   AdvertisingServiceClient,
   PoultryServiceClient
 )
