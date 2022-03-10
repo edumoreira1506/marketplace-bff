@@ -1,6 +1,6 @@
 import { BaseController, withTokenAuthorizationFactory } from '@cig-platform/core'
 
-import TokenService from '@Services/TokenService'
 import AccountClient from '@Clients/AccountServiceClient'
+import AuthClient from '@Clients/AuthBffClient'
 
-export default withTokenAuthorizationFactory(TokenService, BaseController.errorResponse, AccountClient)
+export default withTokenAuthorizationFactory(AuthClient, BaseController.errorResponse, AccountClient)
