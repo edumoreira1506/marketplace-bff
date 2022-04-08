@@ -45,6 +45,15 @@ export class AdvertisingFavoriteAggregator {
     const merchants = await this._advertisingServiceClient.getMerchants(breederId)
 
     if (merchants.length) {
+      const advertising = await this._advertisingServiceClient.getAdvertising(merchants[0].id, advertisingId)
+      const favoritesAmount = Number((advertising?.favoritesAmount ?? 0) - 1)
+
+      await this._advertisingServiceClient.updateAdvertising({
+        advertisingId,
+        merchantId: merchants[0].id,
+        favoritesAmount: favoritesAmount < 0 ? 0 : favoritesAmount,
+      })
+
       return this._advertisingServiceClient.removeAdvertisingFavorite(
         merchants[0].id,
         advertisingId,
