@@ -16,13 +16,15 @@ class AdvertisingQuestionController {
     const question = req.body.question
     const advertisingId = req.params.advertisingId
     const breederId = req.params.breederId
+    const breeders = req.breeders
 
-    if (!user) throw new NotFoundError()
+    if (!user || !breeders) throw new NotFoundError()
 
+    const breeder = req?.breeders?.[0]
     const savedQuestion = await AdvertisingQuestionAggregator.postQuestion(
       breederId,
       advertisingId,
-      { ...question, externalId: user.id }
+      { ...question, externalId: `${user.id}___${breeder?.id}` }
     )
 
     return BaseController.successResponse(res, { question: savedQuestion })
