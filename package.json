@@ -21,7 +21,7 @@
 		"@cig-platform/docs": "^0.4.6",
 		"@cig-platform/enums": "^0.0.6",
 		"@cig-platform/factories": "^0.0.21",
-		"@cig-platform/types": "0.0.38",
+		"@cig-platform/types": "0.0.40",
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.0",
 		"express": "^4.17.3",
